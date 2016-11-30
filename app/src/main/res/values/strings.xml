@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Krokomierz</string>
+    <string name="step_counter">android.hardware.sensor.stepcounter</string>
+    <string name="step_detector">android.hardware.sensor.stepdetector</string>
+    <string name="tv_tile_m">to jest okolo [m]</string>
+    <string name="tv_title_steps">Zrobionoe dzisiaj kroki:</string>
+    <string name="tv_authors">Aplikacja Tomasza Woźniaka i Arkadiusza Woźniaka</string>
+
+    <string name="alert_warning">UWAGA!!!</string>
+    <string name="alert_yes">Tak</string>
+    <string name="alert_no">Nie</string>
+    <string name="alert_quest">Napewno chcesz skasować wynik ?</string>
+</resources>
