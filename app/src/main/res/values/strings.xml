@@ -4,7 +4,7 @@
     <string name="step_detector">android.hardware.sensor.stepdetector</string>
     <string name="tv_tile_m">to jest okolo [m]</string>
     <string name="tv_title_steps">Zrobionoe dzisiaj kroki:</string>
-    <string name="tv_authors">Aplikacja Tomasza Woźniaka i Arkadiusza Woźniaka</string>
+    <string name="tv_authors">Autor Radosław Subczyński</string>
 
     <string name="alert_warning">UWAGA!!!</string>
     <string name="alert_yes">Tak</string>
