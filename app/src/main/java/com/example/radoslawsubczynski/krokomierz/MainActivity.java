@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,10 +14,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.github.clans.fab.FloatingActionButton;
 
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+public class MainActivity extends AppCompatActivity implements SensorEventListener, View.OnClickListener {
     private static int sum;
 
     private TextView tv_step;
@@ -31,13 +35,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private final double STEP_FACTOR = 0.7;
 
+    private RelativeLayout mRoot;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tv_step = (TextView) findViewById(R.id.tv_step);
         tv_meters = (TextView) findViewById(R.id.tv_meters);
-
+        FloatingActionButton menu1 = (FloatingActionButton)findViewById(R.id.subFloatingMenu1) ;
+        FloatingActionButton menu2 = (FloatingActionButton)findViewById(R.id.subFloatingMenu2) ;
+        mRoot = (RelativeLayout) findViewById(R.id.activity_main);
+        menu1.setOnClickListener(this);
+        menu2.setOnClickListener(this);
 
         mSensorManager = (SensorManager)
                 getSystemService(Context.SENSOR_SERVICE);
@@ -49,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_directions_walk_white_24px);
         printScore(sum, STEP_FACTOR);
+
 
     }
 
@@ -126,4 +137,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.subFloatingMenu1:
+                Snackbar.make(mRoot, "Jescze nie wiem co tutaj bedzie", Snackbar.LENGTH_LONG).show();
+                break;
+            case R.id.subFloatingMenu2:
+                Snackbar.make(mRoot, "Tutaj beda znajdowac sie statystyki", Snackbar.LENGTH_LONG).show();
+                break;
+        }
+    }
 }
