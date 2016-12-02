@@ -2,6 +2,7 @@ package com.example.radoslawsubczynski.krokomierz;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -11,10 +12,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.github.clans.fab.FloatingActionButton;
@@ -33,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private Sensor mStepDetectorSensor;
 
-    private final double STEP_FACTOR = 0.7;
+    private double STEP_FACTOR = 0.7;
 
     private RelativeLayout mRoot;
 
@@ -45,9 +48,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         tv_meters = (TextView) findViewById(R.id.tv_meters);
         FloatingActionButton menu1 = (FloatingActionButton)findViewById(R.id.subFloatingMenu1) ;
         FloatingActionButton menu2 = (FloatingActionButton)findViewById(R.id.subFloatingMenu2) ;
+        FloatingActionButton menu3 = (FloatingActionButton)findViewById(R.id.subFloatingMenu3) ;
         mRoot = (RelativeLayout) findViewById(R.id.activity_main);
         menu1.setOnClickListener(this);
         menu2.setOnClickListener(this);
+        menu3.setOnClickListener(this);
 
         mSensorManager = (SensorManager)
                 getSystemService(Context.SENSOR_SERVICE);
@@ -66,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+//        inflater.inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -75,23 +80,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         switch (item.getItemId()) {
             case R.id.cart:
 
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.alert_warning)
-                        .setMessage(R.string.alert_quest)
-                        .setPositiveButton(R.string.alert_yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                sum = 0;
-                                tv_step.setText("0");
-                                tv_meters.setText("0");
-                            }
-                        })
-                        .setNegativeButton(R.string.alert_no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -144,8 +133,71 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 Snackbar.make(mRoot, "Jescze nie wiem co tutaj bedzie", Snackbar.LENGTH_LONG).show();
                 break;
             case R.id.subFloatingMenu2:
-                Snackbar.make(mRoot, "Tutaj beda znajdowac sie statystyki", Snackbar.LENGTH_LONG).show();
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.alert_warning)
+                        .setMessage(R.string.alert_quest)
+                        .setPositiveButton(R.string.alert_yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                sum = 0;
+                                tv_step.setText("0");
+                                tv_meters.setText("0");
+                            }
+                        })
+                        .setNegativeButton(R.string.alert_no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                break;
+
+            case R.id.subFloatingMenu3:
+                final EditText input = new EditText(MainActivity.this);
+                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                input.setRawInputType(Configuration.KEYBOARD_12KEY);
+                new AlertDialog.Builder(this)
+                        .setView(input)
+                        .setTitle(R.string.alert_warning)
+                        .setMessage("Podaj swoj wzrost")
+
+                        .setPositiveButton(R.string.alert_yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                if(input.length()>0){
+                                lengthStep(input.getText().toString().trim());}
+                                else {
+                                    Snackbar.make(mRoot, "Tak maly napewno nie jestes ;)", Snackbar.LENGTH_LONG).show();
+                                }
+
+                            }
+                        })
+                        .setNegativeButton(R.string.alert_no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
                 break;
         }
     }
+
+    void lengthStep(String weigh) {
+        int number = (Integer.parseInt(weigh));
+        if (number < 160) {
+            STEP_FACTOR = 40.5;
+            Snackbar.make(mRoot, "Długosc kroku 40,5 cm", Snackbar.LENGTH_LONG).show();
+        } else if (number > 160 && number < 170) {
+            Snackbar.make(mRoot, "Długosc kroku 45,5 cm", Snackbar.LENGTH_LONG).show();
+            STEP_FACTOR = 45.5;
+        } else if (number > 170 && number < 210){
+            Snackbar.make(mRoot, "Długosc kroku 50,5 cm", Snackbar.LENGTH_LONG).show();
+        STEP_FACTOR = 50.5;}
+        else
+        {
+            Snackbar.make(mRoot, "Synek chyba jestes za duzy :)", Snackbar.LENGTH_LONG).show();
+        }
+
+    }
+
 }

@@ -64,10 +64,18 @@
         fab:menu_fab_hide_animation="@anim/my_hide_animation">
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/subFloatingMenu1"
+            android:id="@+id/subFloatingMenu3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_directions_walk_white_24px"
+            fab:fab_label="Sub Menu Item 2"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/subFloatingMenu1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_trending_up_white_24px"
             fab:fab_label="Sub Menu Item 1"
             fab:fab_size="mini" />
 
@@ -75,7 +83,7 @@
             android:id="@+id/subFloatingMenu2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_trending_up_white_24px"
+            android:src="@drawable/ic_cached_white_24px"
             fab:fab_label="Sub Menu Item 2"
             fab:fab_size="mini" />
 
