@@ -26,6 +26,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.0.1'
     testCompile 'junit:junit:4.12'
+    compile 'com.github.clans:fab:1.6.4'
+    compile 'com.android.support:design:22.2.1'
 
 
 }
