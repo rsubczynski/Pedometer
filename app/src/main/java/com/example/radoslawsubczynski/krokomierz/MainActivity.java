@@ -20,11 +20,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.example.radoslawsubczynski.krokomierz.Database.DBHelper;
+import com.example.radoslawsubczynski.krokomierz.Database.DefaultDataProviderComponent;
+import com.example.radoslawsubczynski.krokomierz.Database.Listeners.OnGetAllCotacts;
 import com.github.clans.fab.FloatingActionButton;
 
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements SensorEventListener, View.OnClickListener,OnGetAllCotacts {
     private static int sum;
+
+    DBHelper mydb;
 
     private TextView tv_step;
 
@@ -131,7 +137,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         switch (view.getId()){
             case R.id.subFloatingMenu1:
                 Snackbar.make(mRoot, "Jescze nie wiem co tutaj bedzie", Snackbar.LENGTH_LONG).show();
+                mydb = new DBHelper(this);
+//                mydb.insertContact("Radek","601311446","kozak221@gmail.com","POlitechniki","lodz");
+//                mydb.insertContact("Jacek","601311446","kozak221@gmail.com","POlitechniki","lodz");
+//                mydb.insertContact("Placek","601311446","kozak221@gmail.com","POlitechniki","lodz");
+                DefaultDataProviderComponent.getInstance().registerListenerGetAllContats(this);
+                DefaultDataProviderComponent.getInstance().getAllCotacts(mydb);
+//                ArrayList array_list = mydb.getAllCotacts();
+//                tv_meters.setText(array_list.toString());
+
+
                 break;
+
             case R.id.subFloatingMenu2:
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.alert_warning)
@@ -200,4 +217,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
+    @Override
+    public void onResponseGetAllCotactsSucces(String cos) {
+
+    }
+
+    @Override
+    public void onResponseOnGetAllCotactsFail() {
+
+    }
 }

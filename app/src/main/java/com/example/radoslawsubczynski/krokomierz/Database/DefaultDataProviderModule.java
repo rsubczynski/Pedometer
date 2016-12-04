@@ -11,6 +11,7 @@ public abstract class DefaultDataProviderModule implements DataProviderModule {
 
     private List<DataProviderListener> dataProviderListeners = new ArrayList<>();
 
+
     public void registerListener(DataProviderListener dataProviderListener) {
         if (!dataProviderListeners.contains(dataProviderListener)) {
             dataProviderListeners.add(dataProviderListener);
@@ -36,4 +37,17 @@ public abstract class DefaultDataProviderModule implements DataProviderModule {
         }
     }
 
+    @Override
+    public void broadcastGetAllContactsFail() {
+        for (DataProviderListener dataProviderListener : dataProviderListeners) {
+            dataProviderListener.onGetAllContatsFail();
+        }
+    }
+
+    @Override
+    public void broadcastGetAllContactsSuccess(String cos) {
+        for (DataProviderListener dataProviderListener : dataProviderListeners) {
+            dataProviderListener.onGetAllContatsSuccess(cos);
+        }
+    }
 }

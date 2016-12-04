@@ -1,5 +1,6 @@
 package com.example.radoslawsubczynski.krokomierz.Database;
 
+import com.example.radoslawsubczynski.krokomierz.Database.Listeners.OnGetAllCotacts;
 import com.example.radoslawsubczynski.krokomierz.Database.Listeners.OnSearchStringValueListener;
 
 import java.util.ArrayList;
@@ -22,7 +23,9 @@ public class DefaultDataProviderComponent implements DataProviderComponent, Data
 
     private DataProviderModule dataProviderModule = new DatabaseSQLDataProviderModule();
 
+
     private static List<OnSearchStringValueListener> searchUserListeners = new ArrayList<>();
+    private static List<OnGetAllCotacts> onGetAllCotactses = new ArrayList<>();
 
     private DefaultDataProviderComponent() {
         dataProviderModule.registerListener(this);
@@ -57,9 +60,45 @@ public class DefaultDataProviderComponent implements DataProviderComponent, Data
         }
     }
 
+    ///
+    public void registerListenerGetAllContats(OnGetAllCotacts OnGetAllCotacts) {
+        if (!onGetAllCotactses.contains(OnGetAllCotacts)) {
+            onGetAllCotactses.add(OnGetAllCotacts);
+
+        }
+    }
+
+    public void unregisterListenerGetAllContats(OnGetAllCotacts OnGetAllCotacts) {
+        if (onGetAllCotactses.contains(OnGetAllCotacts)) {
+            onGetAllCotactses.remove(OnGetAllCotacts);
+
+        }
+    }
+
+    private void broadcastOnGetAllContatsSuccess(String cos) {
+        for (OnGetAllCotacts OnGetAllCotacts : onGetAllCotactses) {
+            OnGetAllCotacts.onResponseGetAllCotactsSucces(cos);
+            onGetAllCotactses.remove(OnGetAllCotacts);
+
+        }
+    }
+
+    private void broadcastOnGetAllContatsFail() {
+        for (OnGetAllCotacts OnGetAllCotacts : onGetAllCotactses) {
+            OnGetAllCotacts.onResponseOnGetAllCotactsFail();
+
+        }
+    }
+
+    ///
     @Override
     public void searchString(String SearchValue, String firebaseURL) {
-        dataProviderModule.isStringExist(SearchValue,firebaseURL );
+        dataProviderModule.isStringExist(SearchValue, firebaseURL);
+    }
+
+    @Override
+    public void getAllCotacts(DBHelper mydb) {
+        dataProviderModule.getAllContact(mydb);
     }
 
     @Override
@@ -70,5 +109,15 @@ public class DefaultDataProviderComponent implements DataProviderComponent, Data
     @Override
     public void onSearchFail() {
         broadcastOnSearchUserFail();
+    }
+
+    @Override
+    public void onGetAllContatsSuccess(String cos) {
+        broadcastOnGetAllContatsSuccess(cos);
+    }
+
+    @Override
+    public void onGetAllContatsFail() {
+        broadcastOnGetAllContatsFail();
     }
 }

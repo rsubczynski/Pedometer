@@ -9,4 +9,12 @@ public interface DataProviderListener {
     void onSearchSuccess(String searchUser);
 
     void onSearchFail();
+
+    void onGetAllContatsSuccess(String cos);
+
+    void onGetAllContatsFail();
+
+
+
+
 }
