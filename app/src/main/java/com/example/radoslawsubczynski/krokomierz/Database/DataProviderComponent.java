@@ -12,6 +12,6 @@ public interface DataProviderComponent {
 
     void searchString(final String SearchValue, String firebaseURL);
 
-    void getAllCotacts(DBHelper mydb);
+    void getAllCotacts();
 
 }

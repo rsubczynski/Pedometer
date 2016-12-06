@@ -12,7 +12,7 @@ public interface DataProviderModule {
 
     void isStringExist(final String searchValue, String FIREBASE_URL);
 
-    void getAllContact(DBHelper mydb);
+    void getAllContact();
 
     void registerListener(DataProviderListener dataProviderListener);
 

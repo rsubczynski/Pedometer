@@ -7,6 +7,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.radoslawsubczynski.krokomierz.Application;
 import com.example.radoslawsubczynski.krokomierz.MainActivity;
 
 import java.util.ArrayList;
@@ -28,8 +29,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CONTACTS_COLUMN_PHONE = "phone";
     private HashMap hp;
 
-    public DBHelper(Context context) {
-        super(context, DATABASE_NAME , null, 1);
+    public DBHelper() {
+        super(Application.getAppContext(), DATABASE_NAME , null, 1);
     }
 
 

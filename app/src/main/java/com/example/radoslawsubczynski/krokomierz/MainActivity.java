@@ -30,7 +30,6 @@ import com.github.clans.fab.FloatingActionButton;
 public class MainActivity extends AppCompatActivity implements SensorEventListener, View.OnClickListener,OnGetAllCotacts {
     private static int sum;
 
-    DBHelper mydb;
 
     private TextView tv_step;
 
@@ -52,13 +51,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_main);
         tv_step = (TextView) findViewById(R.id.tv_step);
         tv_meters = (TextView) findViewById(R.id.tv_meters);
-        FloatingActionButton menu1 = (FloatingActionButton)findViewById(R.id.subFloatingMenu1) ;
-        FloatingActionButton menu2 = (FloatingActionButton)findViewById(R.id.subFloatingMenu2) ;
-        FloatingActionButton menu3 = (FloatingActionButton)findViewById(R.id.subFloatingMenu3) ;
+        FloatingActionButton floatingActionButtonWalk = (FloatingActionButton)findViewById(R.id.subFloatingMenu1) ;
+        FloatingActionButton floatingActionButtonDatabase = (FloatingActionButton)findViewById(R.id.subFloatingMenu2) ;
+        FloatingActionButton floatingActionButtonRefresh = (FloatingActionButton)findViewById(R.id.subFloatingMenu3) ;
         mRoot = (RelativeLayout) findViewById(R.id.activity_main);
-        menu1.setOnClickListener(this);
-        menu2.setOnClickListener(this);
-        menu3.setOnClickListener(this);
+        floatingActionButtonWalk.setOnClickListener(this);
+        floatingActionButtonDatabase.setOnClickListener(this);
+        floatingActionButtonRefresh.setOnClickListener(this);
 
         mSensorManager = (SensorManager)
                 getSystemService(Context.SENSOR_SERVICE);
@@ -72,24 +71,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         printScore(sum, STEP_FACTOR);
 
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.cart:
-
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     @Override
@@ -136,86 +117,69 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.subFloatingMenu1:
-                Snackbar.make(mRoot, "Jescze nie wiem co tutaj bedzie", Snackbar.LENGTH_LONG).show();
-                mydb = new DBHelper(this);
-//                mydb.insertContact("Radek","601311446","kozak221@gmail.com","POlitechniki","lodz");
-//                mydb.insertContact("Jacek","601311446","kozak221@gmail.com","POlitechniki","lodz");
-//                mydb.insertContact("Placek","601311446","kozak221@gmail.com","POlitechniki","lodz");
                 DefaultDataProviderComponent.getInstance().registerListenerGetAllContats(this);
-                DefaultDataProviderComponent.getInstance().getAllCotacts(mydb);
-//                ArrayList array_list = mydb.getAllCotacts();
-//                tv_meters.setText(array_list.toString());
-
-
+                DefaultDataProviderComponent.getInstance().getAllCotacts();
                 break;
 
             case R.id.subFloatingMenu2:
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.alert_warning)
-                        .setMessage(R.string.alert_quest)
-                        .setPositiveButton(R.string.alert_yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                sum = 0;
-                                tv_step.setText("0");
-                                tv_meters.setText("0");
-                            }
-                        })
-                        .setNegativeButton(R.string.alert_no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
+                AlertDialogRefreshScore();
                 break;
 
             case R.id.subFloatingMenu3:
-                final EditText input = new EditText(MainActivity.this);
-                input.setInputType(InputType.TYPE_CLASS_NUMBER);
-                input.setRawInputType(Configuration.KEYBOARD_12KEY);
-                new AlertDialog.Builder(this)
-                        .setView(input)
-                        .setTitle(R.string.alert_warning)
-                        .setMessage("Podaj swoj wzrost")
-
-                        .setPositiveButton(R.string.alert_yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                if(input.length()>0){
-                                lengthStep(input.getText().toString().trim());}
-                                else {
-                                    Snackbar.make(mRoot, "Tak maly napewno nie jestes ;)", Snackbar.LENGTH_LONG).show();
-                                }
-
-                            }
-                        })
-                        .setNegativeButton(R.string.alert_no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
+                alertDialogGetGetHeigth();
                 break;
         }
     }
 
-    void lengthStep(String weigh) {
-        int number = (Integer.parseInt(weigh));
-        if (number < 160) {
-            STEP_FACTOR = 40.5;
-            Snackbar.make(mRoot, "Długosc kroku 40,5 cm", Snackbar.LENGTH_LONG).show();
-        } else if (number > 160 && number < 170) {
-            Snackbar.make(mRoot, "Długosc kroku 45,5 cm", Snackbar.LENGTH_LONG).show();
-            STEP_FACTOR = 45.5;
-        } else if (number > 170 && number < 210){
-            Snackbar.make(mRoot, "Długosc kroku 50,5 cm", Snackbar.LENGTH_LONG).show();
-        STEP_FACTOR = 50.5;}
-        else
-        {
-            Snackbar.make(mRoot, "Synek chyba jestes za duzy :)", Snackbar.LENGTH_LONG).show();
-        }
-
+    private void AlertDialogRefreshScore() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.alert_warning)
+                .setMessage(R.string.alert_quest)
+                .setPositiveButton(R.string.alert_yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        sum = 0;
+                        tv_step.setText("0");
+                        tv_meters.setText("0");
+                    }
+                })
+                .setNegativeButton(R.string.alert_no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
+
+    private void alertDialogGetGetHeigth() {
+        final EditText input = new EditText(MainActivity.this);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        input.setRawInputType(Configuration.KEYBOARD_12KEY);
+        new AlertDialog.Builder(this)
+                .setView(input)
+                .setTitle(R.string.alert_warning)
+                .setMessage(getString(R.string.alert_give_me_your_height))
+
+                .setPositiveButton(R.string.alert_yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(input.length()>0){
+                            double lengStep = Utils.lengthStep(input.getText().toString().trim());
+                            Snackbar.make(mRoot, getString(R.string.alert_lenght_step) + lengStep, Snackbar.LENGTH_LONG).show();}
+                        else {
+                            Snackbar.make(mRoot, getString(R.string.alert_too_small), Snackbar.LENGTH_LONG).show();
+                        }
+
+                    }
+                })
+                .setNegativeButton(R.string.alert_no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
 
     @Override
     public void onResponseGetAllCotactsSucces(String cos) {

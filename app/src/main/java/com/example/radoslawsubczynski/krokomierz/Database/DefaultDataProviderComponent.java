@@ -97,8 +97,8 @@ public class DefaultDataProviderComponent implements DataProviderComponent, Data
     }
 
     @Override
-    public void getAllCotacts(DBHelper mydb) {
-        dataProviderModule.getAllContact(mydb);
+    public void getAllCotacts() {
+        dataProviderModule.getAllContact();
     }
 
     @Override
