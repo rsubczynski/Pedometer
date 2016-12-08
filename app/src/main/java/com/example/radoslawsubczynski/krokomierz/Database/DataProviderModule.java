@@ -10,18 +10,18 @@ import java.util.ArrayList;
 
 public interface DataProviderModule {
 
-    void isStringExist(final String searchValue, String FIREBASE_URL);
+    void isStringExist(String searchValue);
 
-    void getAllContact();
+    void getAllScore();
 
     void registerListener(DataProviderListener dataProviderListener);
 
     void unregisterListener(DataProviderListener dataProviderListener);
 
 
-    void broadcastGetAllContactsSuccess(String cos);
+    void broadcastGetAllScoreSuccess(String cos);
 
-    void broadcastGetAllContactsFail();
+    void broadcastGetAllScoreFail();
 
 
 }

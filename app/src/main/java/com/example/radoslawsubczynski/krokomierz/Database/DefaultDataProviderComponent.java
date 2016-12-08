@@ -1,6 +1,6 @@
 package com.example.radoslawsubczynski.krokomierz.Database;
 
-import com.example.radoslawsubczynski.krokomierz.Database.Listeners.OnGetAllCotacts;
+import com.example.radoslawsubczynski.krokomierz.Database.Listeners.OnGetAllScores;
 import com.example.radoslawsubczynski.krokomierz.Database.Listeners.OnSearchStringValueListener;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class DefaultDataProviderComponent implements DataProviderComponent, Data
 
 
     private static List<OnSearchStringValueListener> searchUserListeners = new ArrayList<>();
-    private static List<OnGetAllCotacts> onGetAllCotactses = new ArrayList<>();
+    private static List<OnGetAllScores> onGetAllScores = new ArrayList<>();
 
     private DefaultDataProviderComponent() {
         dataProviderModule.registerListener(this);
@@ -61,44 +61,44 @@ public class DefaultDataProviderComponent implements DataProviderComponent, Data
     }
 
     ///
-    public void registerListenerGetAllContats(OnGetAllCotacts OnGetAllCotacts) {
-        if (!onGetAllCotactses.contains(OnGetAllCotacts)) {
-            onGetAllCotactses.add(OnGetAllCotacts);
+    public void registerListenerGetAllScore(OnGetAllScores OnGetAllScores) {
+        if (!onGetAllScores.contains(OnGetAllScores)) {
+            onGetAllScores.add(OnGetAllScores);
 
         }
     }
 
-    public void unregisterListenerGetAllContats(OnGetAllCotacts OnGetAllCotacts) {
-        if (onGetAllCotactses.contains(OnGetAllCotacts)) {
-            onGetAllCotactses.remove(OnGetAllCotacts);
+    public void unregisterListenerGetAllScore(OnGetAllScores OnGetAllScores) {
+        if (onGetAllScores.contains(OnGetAllScores)) {
+            onGetAllScores.remove(OnGetAllScores);
 
         }
     }
 
-    private void broadcastOnGetAllContatsSuccess(String cos) {
-        for (OnGetAllCotacts OnGetAllCotacts : onGetAllCotactses) {
-            OnGetAllCotacts.onResponseGetAllCotactsSucces(cos);
-            onGetAllCotactses.remove(OnGetAllCotacts);
+    private void broadcastOnGetAllScoreSuccess(String cos) {
+        for (OnGetAllScores OnGetAllScores : onGetAllScores) {
+            OnGetAllScores.onResponseGetAllScoreSuccess(cos);
+            onGetAllScores.remove(OnGetAllScores);
 
         }
     }
 
-    private void broadcastOnGetAllContatsFail() {
-        for (OnGetAllCotacts OnGetAllCotacts : onGetAllCotactses) {
-            OnGetAllCotacts.onResponseOnGetAllCotactsFail();
+    private void broadcastOnGetAllScoreFail() {
+        for (OnGetAllScores OnGetAllScores : onGetAllScores) {
+            OnGetAllScores.onResponseOnGetAllScoreFail();
 
         }
     }
 
     ///
     @Override
-    public void searchString(String SearchValue, String firebaseURL) {
-        dataProviderModule.isStringExist(SearchValue, firebaseURL);
+    public void searchString(String SearchValue) {
+        dataProviderModule.isStringExist(SearchValue);
     }
 
     @Override
-    public void getAllCotacts() {
-        dataProviderModule.getAllContact();
+    public void getAllScore() {
+        dataProviderModule.getAllScore();
     }
 
     @Override
@@ -113,11 +113,11 @@ public class DefaultDataProviderComponent implements DataProviderComponent, Data
 
     @Override
     public void onGetAllContatsSuccess(String cos) {
-        broadcastOnGetAllContatsSuccess(cos);
+        broadcastOnGetAllScoreSuccess(cos);
     }
 
     @Override
     public void onGetAllContatsFail() {
-        broadcastOnGetAllContatsFail();
+        broadcastOnGetAllScoreFail();
     }
 }

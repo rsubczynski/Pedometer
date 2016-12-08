@@ -13,21 +13,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.radoslawsubczynski.krokomierz.Database.DBHelper;
 import com.example.radoslawsubczynski.krokomierz.Database.DefaultDataProviderComponent;
-import com.example.radoslawsubczynski.krokomierz.Database.Listeners.OnGetAllCotacts;
+import com.example.radoslawsubczynski.krokomierz.Database.Listeners.OnGetAllScores;
 import com.github.clans.fab.FloatingActionButton;
 
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener, View.OnClickListener,OnGetAllCotacts {
+public class MainActivity extends AppCompatActivity implements SensorEventListener, View.OnClickListener,OnGetAllScores {
     private static int sum;
 
 
@@ -117,8 +113,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.subFloatingMenu1:
-                DefaultDataProviderComponent.getInstance().registerListenerGetAllContats(this);
-                DefaultDataProviderComponent.getInstance().getAllCotacts();
+                DefaultDataProviderComponent.getInstance().registerListenerGetAllScore(this);
+                DefaultDataProviderComponent.getInstance().getAllScore();
                 break;
 
             case R.id.subFloatingMenu2:
@@ -126,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 break;
 
             case R.id.subFloatingMenu3:
-                alertDialogGetGetHeigth();
+                alertDialogGetGetHeight();
                 break;
         }
     }
@@ -151,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 .show();
     }
 
-    private void alertDialogGetGetHeigth() {
+    private void alertDialogGetGetHeight() {
         final EditText input = new EditText(MainActivity.this);
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         input.setRawInputType(Configuration.KEYBOARD_12KEY);
@@ -182,12 +178,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 
     @Override
-    public void onResponseGetAllCotactsSucces(String cos) {
+    public void onResponseGetAllScoreSuccess(String cos) {
 
     }
 
     @Override
-    public void onResponseOnGetAllCotactsFail() {
+    public void onResponseOnGetAllScoreFail() {
 
     }
 }

@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public interface DataProviderComponent {
 
-    void searchString(final String SearchValue, String firebaseURL);
+    void searchString(String SearchValue);
 
-    void getAllCotacts();
+    void getAllScore();
 
 }

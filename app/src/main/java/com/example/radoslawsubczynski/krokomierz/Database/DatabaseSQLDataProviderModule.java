@@ -7,20 +7,22 @@ public class DatabaseSQLDataProviderModule extends DefaultDataProviderModule {
    private DBHelper mydb  = new DBHelper();
 
     @Override
-    public void isStringExist(String searchValue, String FIREBASE_URL) {
+    public void isStringExist(String searchValue) {
 
     }
 
-//    @Override
-    public void getAllContact() {
+    @Override
+    public void getAllScore() {
         try {
-            String cos = mydb.getAllCotacts().toString();
-            broadcastGetAllContactsSuccess(cos);
+            String proba = mydb.getAllScores().toString();
+            broadcastGetAllScoreSuccess(proba);
         }
-        catch (Exception e){
-            broadcastGetAllContactsFail();
+        catch (NullPointerException e){
+            broadcastGetAllScoreFail();
         }
-
+        catch (ArithmeticException e){
+            broadcastGetAllScoreFail();
+        }
     }
 }
 

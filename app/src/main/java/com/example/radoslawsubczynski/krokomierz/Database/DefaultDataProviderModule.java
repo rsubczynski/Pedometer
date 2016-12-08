@@ -38,14 +38,14 @@ public abstract class DefaultDataProviderModule implements DataProviderModule {
     }
 
     @Override
-    public void broadcastGetAllContactsFail() {
+    public void broadcastGetAllScoreFail() {
         for (DataProviderListener dataProviderListener : dataProviderListeners) {
             dataProviderListener.onGetAllContatsFail();
         }
     }
 
     @Override
-    public void broadcastGetAllContactsSuccess(String cos) {
+    public void broadcastGetAllScoreSuccess(String cos) {
         for (DataProviderListener dataProviderListener : dataProviderListeners) {
             dataProviderListener.onGetAllContatsSuccess(cos);
         }
