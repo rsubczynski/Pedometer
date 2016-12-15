@@ -10,4 +10,7 @@
     <string name="alert_yes">Tak</string>
     <string name="alert_no">Nie</string>
     <string name="alert_quest">Napewno chcesz skasować wynik ?</string>
+    <string name="alert_give_me_your_height">Podaj swoj wzrost!!!</string>
+    <string name="alert_lenght_step">Długosc Kroku to :</string>
+    <string name="alert_too_small">Tak maly napewno nie jestes</string>
 </resources>
